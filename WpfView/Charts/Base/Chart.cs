@@ -1304,17 +1304,21 @@ namespace LiveCharts.Wpf.Charts.Base
             var f = this.ConvertToPixels(new Point(ScrollHorizontalFrom, ScrollVerticalFrom));
             var t = this.ConvertToPixels(new Point(ScrollHorizontalTo, ScrollVerticalTo));
 
-            if (ScrollMode == ScrollMode.X || ScrollMode == ScrollMode.XY)
-            {
-                Canvas.SetLeft(ScrollBar, f.X);
-                if (t.X - f.X >= 0) ScrollBar.Width = t.X - f.X > 8 ? t.X - f.X : 8;
-            }
+            try
+            { 
+                if (ScrollMode == ScrollMode.X || ScrollMode == ScrollMode.XY)
+                {
+                    Canvas.SetLeft(ScrollBar, f.X);
+                    if (t.X - f.X >= 0) ScrollBar.Width = t.X - f.X > 8 ? t.X - f.X : 8;
+                }
 
-            if (ScrollMode == ScrollMode.Y || ScrollMode == ScrollMode.XY)
-            {
-                Canvas.SetTop(ScrollBar, t.Y);
-                if (f.Y - t.Y >= 0) ScrollBar.Height = f.Y - t.Y > 8 ? f.Y - t.Y : 8;
+                if (ScrollMode == ScrollMode.Y || ScrollMode == ScrollMode.XY)
+                {
+                    Canvas.SetTop(ScrollBar, t.Y);
+                    if (f.Y - t.Y >= 0) ScrollBar.Height = f.Y - t.Y > 8 ? f.Y - t.Y : 8;
+                }
             }
+            catch (NullReferenceException) { }
         }
 
         private void ScrollBarOnMouseUp(object sender, MouseButtonEventArgs e)
